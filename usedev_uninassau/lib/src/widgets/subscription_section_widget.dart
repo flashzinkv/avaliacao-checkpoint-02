@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:usedev_uninassau/src/theme/app_colors.dart';
+import 'package:usedev_uninassau/src/theme/responsive.dart';
 
 class SubscriptionSectionWidget extends StatelessWidget {
   const SubscriptionSectionWidget({super.key});
@@ -7,57 +9,94 @@ class SubscriptionSectionWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return DecoratedBox(
-      decoration: BoxDecoration(color: Color(0xFF8FFF24)),
+      decoration: const BoxDecoration(color: AppColors.limeGreen),
       child: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          spacing: 20,
-          children: [
-            Text(
-              'Inscreva-se para ganhar descontos!',
-              textAlign: .center,
-              style: TextStyle(
-                fontSize: 18,
-                fontWeight: .bold,
-                fontFamily: GoogleFonts.orbitron().fontFamily,
-              ),
-            ),
-            Text(
-              'Cadastre seu email, receba novidades e descontos imperdíveis antes de todo mundo!',
-              textAlign: .center,
-              style: TextStyle(
-                fontSize: 18,
-                fontFamily: GoogleFonts.poppins().fontFamily,
-              ),
-            ),
-            TextField(
-              keyboardType: .emailAddress,
-              decoration: InputDecoration(
-                hintText: 'Digite seu melhor endereço de email',
-
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(50),
-                  borderSide: BorderSide(color: Color(0xFFDDDDDD)),
+        padding: EdgeInsets.symmetric(
+          horizontal: Responsive.horizontalPadding(context),
+          vertical: 40,
+        ),
+        child: Center(
+          child: ConstrainedBox(
+            constraints: const BoxConstraints(maxWidth: 640),
+            child: Column(
+              spacing: 20,
+              children: [
+                Text(
+                  'Inscreva-se para ganhar descontos!',
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    fontSize: 20,
+                    fontWeight: FontWeight.bold,
+                    color: AppColors.darkNavy,
+                    fontFamily: GoogleFonts.orbitron().fontFamily,
+                  ),
                 ),
-              ),
-            ),
-            ElevatedButton(
-              onPressed: () {},
-              style: ElevatedButton.styleFrom(
-                backgroundColor: Color(0xFF780BF7),
-                padding: .symmetric(horizontal: 20, vertical: 15),
-              ),
-              child: Text(
-                'Inscrever',
-                style: TextStyle(
-                  fontFamily: GoogleFonts.poppins().fontFamily,
-                  fontSize: 18,
-                  color: Colors.white,
-                  fontWeight: .bold,
+                Text(
+                  'Cadastre seu email, receba novidades e descontos imperdíveis antes de todo mundo!',
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    fontSize: 16,
+                    color: AppColors.darkNavy,
+                    fontFamily: GoogleFonts.poppins().fontFamily,
+                  ),
                 ),
-              ),
+                TextField(
+                  keyboardType: TextInputType.emailAddress,
+                  textAlign: TextAlign.center,
+                  decoration: InputDecoration(
+                    hintText: 'Digite seu melhor endereço de email',
+                    hintStyle: TextStyle(
+                      color: AppColors.darkNavy.withValues(alpha: 0.6),
+                      fontFamily: GoogleFonts.poppins().fontFamily,
+                    ),
+                    filled: true,
+                    fillColor: Colors.white,
+                    contentPadding: const EdgeInsets.symmetric(
+                      horizontal: 24,
+                      vertical: 18,
+                    ),
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(50),
+                      borderSide: const BorderSide(color: AppColors.darkNavy),
+                    ),
+                    enabledBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(50),
+                      borderSide: const BorderSide(color: AppColors.darkNavy),
+                    ),
+                    focusedBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(50),
+                      borderSide: const BorderSide(
+                        color: AppColors.darkNavy,
+                        width: 2,
+                      ),
+                    ),
+                  ),
+                ),
+                ElevatedButton(
+                  onPressed: () {},
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: AppColors.purple,
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 48,
+                      vertical: 16,
+                    ),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(50),
+                    ),
+                  ),
+                  child: Text(
+                    'Inscrever',
+                    style: TextStyle(
+                      fontFamily: GoogleFonts.poppins().fontFamily,
+                      fontSize: 18,
+                      color: Colors.white,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ),
+              ],
             ),
-          ],
+          ),
         ),
       ),
     );

@@ -1,56 +1,80 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:usedev_uninassau/src/models/product.dart';
+import 'package:usedev_uninassau/src/theme/responsive.dart';
+import 'package:usedev_uninassau/src/widgets/app_top_bar_widget.dart';
+import 'package:usedev_uninassau/src/widgets/app_drawer_widget.dart';
+import 'package:usedev_uninassau/src/widgets/categories_section_widget.dart';
 import 'package:usedev_uninassau/src/widgets/hero_section_widget.dart';
 import 'package:usedev_uninassau/src/widgets/product_card_widget.dart';
+import 'package:usedev_uninassau/src/widgets/footer_section_widget.dart';
+import 'package:usedev_uninassau/src/widgets/responsive_page_widget.dart';
 import 'package:usedev_uninassau/src/widgets/subscription_section_widget.dart';
 
 class InitialScreen extends StatefulWidget {
   const InitialScreen({super.key});
 
   @override
-  _InitialScreenState createState() => _InitialScreenState();
+  State<InitialScreen> createState() => _InitialScreenState();
 }
 
 class _InitialScreenState extends State<InitialScreen> {
   @override
   Widget build(BuildContext context) {
+    final horizontalPadding = Responsive.horizontalPadding(context);
+
     return Scaffold(
-      appBar: AppBar(
-        leading: Icon(Icons.menu, size: 40),
-        title: Image.asset('assets/logo_usedev.png', height: 40),
-        centerTitle: true,
-        actions: [
-          Icon(Icons.person_outline, size: 40),
-          SizedBox(width: 10),
-          Icon(Icons.shopping_cart_outlined, size: 40),
-          SizedBox(width: 25),
-        ],
-      ),
+      appBar: const AppTopBarWidget(),
+      drawer: const AppDrawerWidget(),
       body: SingleChildScrollView(
         child: Column(
-          spacing: 20,
-          crossAxisAlignment: .stretch,
+          crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            HeroSectionWidget(),
-            Text(
-              'Promos Especiais',
-              textAlign: .center,
-              style: TextStyle(
-                fontSize: 28,
-                fontWeight: .bold,
-                fontFamily: GoogleFonts.orbitron().fontFamily,
+            const HeroSectionWidget(),
+            ResponsivePage(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  const CategoriesSectionWidget(),
+                  Padding(
+                    padding: EdgeInsets.fromLTRB(
+                      horizontalPadding,
+                      20,
+                      horizontalPadding,
+                      0,
+                    ),
+                    child: Text(
+                      'Promos Especiais',
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                        fontSize: Responsive.valueForScreen(
+                          context,
+                          mobile: 24,
+                          tablet: 26,
+                          desktop: 28,
+                        ),
+                        fontWeight: FontWeight.bold,
+                        fontFamily: GoogleFonts.orbitron().fontFamily,
+                      ),
+                    ),
+                  ),
+                  Padding(
+                    padding: EdgeInsets.all(horizontalPadding),
+                    child: ResponsiveGrid(
+                      itemCount: productCatalog.length,
+                      mobileColumns: 1,
+                      tabletColumns: 2,
+                      desktopColumns: 3,
+                      itemBuilder: (context, index) {
+                        return ProductCardWidget(product: productCatalog[index]);
+                      },
+                    ),
+                  ),
+                ],
               ),
             ),
-            ListView.builder(
-              shrinkWrap: true,
-              itemCount: 5,
-              itemBuilder: (context, index) => ProductCardWidget(
-                nome: 'Produto 0$index',
-                url: 'https://placehold.co/600x600.png',
-                preco: '10$index,00',
-              ),
-            ),
-            SubscriptionSectionWidget(),
+            const SubscriptionSectionWidget(),
+            const FooterSectionWidget(),
           ],
         ),
       ),
